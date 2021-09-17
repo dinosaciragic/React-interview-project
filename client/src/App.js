@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/pages/Home';
 import React, { Fragment } from 'react';
 import FormState from './context/form/FormState';
+import SuccessPage from './components/pages/SuccessPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <div className='container'>
             <Switch>
               <Route exact path='/' component={Home} />
+              <Route exact path='/success' component={SuccessPage} />
             </Switch>
           </div>
         </Fragment>

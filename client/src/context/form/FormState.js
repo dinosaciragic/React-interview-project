@@ -40,7 +40,7 @@ const FormState = (props) => {
         answer,
         config
       );
-      console.log('results', res.data);
+
       dispatch({
         type: 'addAnswer',
         payload: res.data,

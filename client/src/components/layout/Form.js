@@ -10,7 +10,10 @@ const Form = () => {
 
   useEffect(() => {
     getSurvey();
-  }, []);
+
+    if (POSTRes && !POSTRes.errors) {
+    }
+  }, [POSTRes]);
 
   const [survey, setSurvey] = useState({
     film: '',
