@@ -1,17 +1,8 @@
-import React, { useEffect, useContext } from 'react';
-import FormContext from '../../context/form/formContext';
+import React from 'react';
+import Form from '../layout/Form';
 
 const Home = () => {
-  const formContext = useContext(FormContext);
-
-  const { getSurvey } = formContext;
-
-  useEffect(() => {
-    getSurvey();
-    // eslint-disable-next-line
-  }, []);
-
-  return <div className='grid-2'>Hello home</div>;
+  return <Form />;
 };
 
 export default Home;

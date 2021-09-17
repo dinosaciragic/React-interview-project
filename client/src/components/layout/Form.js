@@ -1,116 +1,89 @@
 import React, { useState, useContext, useEffect } from 'react';
-import ContactContext from '../../context/conact/contactContext'; // Context is provider
+import FormContext from '../../context/form/formContext';
 
 const Form = () => {
-  const contactContext = useContext(ContactContext);
+  const formContext = useContext(FormContext);
 
-  const { addContact, current, clearCurrent, updateContact } = contactContext;
+  const { getSurvey, APIRes } = formContext;
 
   useEffect(() => {
-    if (current !== null) {
-      setContact(current);
-    } else {
-      setContact({
-        name: '',
-        email: '',
-        phone: '',
-        type: 'personal',
-      });
-    }
-  }, [contactContext, current]);
+    getSurvey();
+  }, []);
 
-  const [contact, setContact] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    type: 'personal',
+  const [survey, setSurvey] = useState({
+    film: '',
+    review: '',
   });
 
-  const { name, email, phone, type } = contact;
+  const { film, review } = survey;
 
   /* example of form but without validation */
   const onChange = (e) =>
-    setContact({ ...contact, [e.target.name]: e.target.value });
+    setSurvey({ ...survey, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    if (current === null) {
-      addContact(contact);
-    } else {
-      updateContact(contact);
-    }
-
-    clearAll();
-  };
-
-  const clearAll = () => {
-    clearCurrent();
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>
-        {current ? 'Edit Contact' : 'Add Contact'}
-      </h2>
-      {/* Name */}
+      {APIRes && (
+        <h2 className='text-primary'>{APIRes.data.attributes.title}</h2>
+      )}
+
+      {APIRes && (
+        <div style={{ marginBottom: '10px' }}>
+          {APIRes.data.attributes.description}
+        </div>
+      )}
+
+      {/*    {APIRes && APIRes.data.attributes.questions.map((question) => {
+        label
+         <input
+         type='text'
+         placeholder='Film'
+         name='film'
+         value={film}
+         onChange={onChange}
+       />
+      })} */}
+
+      {/* Film */}
+      {APIRes && (
+        <label className='text-primary'>
+          {APIRes.data.attributes.questions[0].label}
+        </label>
+      )}
       <input
         type='text'
-        placeholder='Name'
-        name='name'
-        value={name}
+        placeholder='Film'
+        name='film'
+        value={film}
         onChange={onChange}
       />
-      {/* Email */}
-      <input
-        type='email'
-        placeholder='Email'
-        name='email'
-        value={email}
-        onChange={onChange}
-      />
-      {/* Phone */}
+
+      {/* Review */}
+      {APIRes && (
+        <label className='text-primary'>
+          {APIRes.data.attributes.questions[1].label}
+        </label>
+      )}
       <input
         type='text'
-        placeholder='Phone'
-        name='phone'
-        value={phone}
+        placeholder='Review'
+        name='review'
+        value={review}
         onChange={onChange}
       />
-      {/* Type radio buttons */}
-      <h5>Contact Type</h5>
-      <input
-        type='radio'
-        name='type'
-        value='personal'
-        checked={type === 'personal'}
-        onChange={onChange}
-      />{' '}
-      Personal{' '}
-      <input
-        type='radio'
-        name='type'
-        value='professional'
-        checked={type === 'professional'}
-        onChange={onChange}
-      />{' '}
-      Professional
+
       {/* Submit button */}
       <div>
         <input
           type='submit'
-          value={current ? 'Update Contact' : 'Add Contact'}
+          value='Submit'
           className='btn btn-primary btn-block'
         />
       </div>
-      {/* Clear button */}
-      {current && (
-        <div>
-          <button className='btn btn-light btn-block' onClick={clearAll}>
-            Clear
-          </button>
-        </div>
-      )}
     </form>
   );
 };

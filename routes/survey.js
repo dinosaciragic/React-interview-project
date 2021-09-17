@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         attributes: {
           title: 'Film feedback form',
           description:
-            'Thank you for participating in the film festival!</p><p>Please fill out this short survey so we can record your feedback.</p>',
+            'Thank you for participating in the film festival!  Please fill out this short survey so we can record your feedback.',
           questions: [
             {
               questionId: 'film',
