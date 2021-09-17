@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         attributes: {
           title: 'Film feedback form',
           description:
-            'Thank you for participating in the film festival!</p><p>Please fill out this short survey so we can record your feedback.</p>',
+            'Thank you for participating in the film festival!  Please fill out this short survey so we can record your feedback.',
           questions: [
             {
               questionId: 'film',
@@ -56,13 +56,13 @@ router.post(
   '/:id/answers',
   [
     check('film', 'Entering the film name is required').not().isEmpty(),
-    check('review', 'Entering the film review is required').exists(),
+    check('review', 'Entering the film review is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.json(errors);
     }
 
     const { film, review } = req.body;
