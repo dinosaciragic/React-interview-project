@@ -5,6 +5,11 @@ export default (state, action) => {
         ...state,
         APIRes: action.payload,
       };
+    case 'addAnswer':
+      return {
+        ...state,
+        POSTRes: action.payload,
+      };
     case 'surveyError':
       return {
         ...state,

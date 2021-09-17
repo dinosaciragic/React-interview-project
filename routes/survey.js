@@ -56,7 +56,7 @@ router.post(
   '/:id/answers',
   [
     check('film', 'Entering the film name is required').not().isEmpty(),
-    check('review', 'Entering the film review is required').exists(),
+    check('review', 'Entering the film review is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);

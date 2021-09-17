@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import FormContext from '../../context/form/formContext';
+import Rating from '@mui/material/Rating';
 
 const Form = () => {
   const formContext = useContext(FormContext);
 
-  const { getSurvey, APIRes } = formContext;
+  const { getSurvey, APIRes, addAnswer } = formContext;
 
   useEffect(() => {
     getSurvey();
@@ -12,7 +13,7 @@ const Form = () => {
 
   const [survey, setSurvey] = useState({
     film: '',
-    review: '',
+    review: null,
   });
 
   const { film, review } = survey;
@@ -23,6 +24,8 @@ const Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    addAnswer(APIRes.data.id, survey);
   };
 
   return (
@@ -37,17 +40,6 @@ const Form = () => {
         </div>
       )}
 
-      {/*    {APIRes && APIRes.data.attributes.questions.map((question) => {
-        label
-         <input
-         type='text'
-         placeholder='Film'
-         name='film'
-         value={film}
-         onChange={onChange}
-       />
-      })} */}
-
       {/* Film */}
       {APIRes && (
         <label className='text-primary'>
@@ -60,6 +52,7 @@ const Form = () => {
         name='film'
         value={film}
         onChange={onChange}
+        required
       />
 
       {/* Review */}
@@ -68,13 +61,16 @@ const Form = () => {
           {APIRes.data.attributes.questions[1].label}
         </label>
       )}
-      <input
-        type='text'
-        placeholder='Review'
-        name='review'
-        value={review}
-        onChange={onChange}
-      />
+
+      <div>
+        <Rating
+          name='review'
+          value={review}
+          onChange={onChange}
+          precision={0.5}
+          size='large'
+        />
+      </div>
 
       {/* Submit button */}
       <div>

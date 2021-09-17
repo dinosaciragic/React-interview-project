@@ -6,6 +6,7 @@ import formReducer from './formReducer';
 const FormState = (props) => {
   const initialState = {
     APIRes: null,
+    POSTRes: null,
     error: null,
   };
 
@@ -14,10 +15,39 @@ const FormState = (props) => {
   // Get Survey
   const getSurvey = async () => {
     try {
-      let res = await axios.get('/api/v1/survey');
+      let res = await axios.get('http://localhost:5000/api/v1/survey');
       console.log('im here', res);
       dispatch({
         type: 'getSurvey',
+        payload: res.data,
+      });
+    } catch (error) {
+      console.error(error);
+
+      dispatch({
+        type: 'surveyError',
+        payload: error.response.msg,
+      });
+    }
+  };
+
+  // Add Answer
+  const addAnswer = async (id, answer) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json ',
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/v1/survey/${id}/answers`,
+        answer,
+        config
+      );
+      console.log('post res', res);
+      dispatch({
+        type: 'addAnswer',
         payload: res.data,
       });
     } catch (error) {
@@ -34,7 +64,9 @@ const FormState = (props) => {
     <FormContext.Provider
       value={{
         APIRes: state.APIRes,
+        POSTRes: state.POSTRes,
         error: state.error,
+        addAnswer,
         getSurvey,
       }}
     >
