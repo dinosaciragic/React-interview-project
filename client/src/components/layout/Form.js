@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import FormContext from '../../context/form/formContext';
 import Rating from '@mui/material/Rating';
+import { fontSize } from '@mui/system';
 
 const Form = () => {
   const formContext = useContext(FormContext);
 
-  const { getSurvey, APIRes, addAnswer } = formContext;
+  const { getSurvey, APIRes, addAnswer, POSTRes } = formContext;
 
   useEffect(() => {
     getSurvey();
@@ -38,6 +39,10 @@ const Form = () => {
         <div style={{ marginBottom: '10px' }}>
           {APIRes.data.attributes.description}
         </div>
+      )}
+
+      {POSTRes && POSTRes.errors && (
+        <div className='alert'>{POSTRes.errors[0].msg}</div>
       )}
 
       {/* Film */}

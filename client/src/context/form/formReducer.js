@@ -10,11 +10,6 @@ export default (state, action) => {
         ...state,
         POSTRes: action.payload,
       };
-    case 'surveyError':
-      return {
-        ...state,
-        error: action.payload,
-      };
     default:
       return state;
   }

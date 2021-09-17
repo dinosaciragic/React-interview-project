@@ -16,18 +16,13 @@ const FormState = (props) => {
   const getSurvey = async () => {
     try {
       let res = await axios.get('http://localhost:5000/api/v1/survey');
-      console.log('im here', res);
+
       dispatch({
         type: 'getSurvey',
         payload: res.data,
       });
     } catch (error) {
       console.error(error);
-
-      dispatch({
-        type: 'surveyError',
-        payload: error.response.msg,
-      });
     }
   };
 
@@ -45,18 +40,13 @@ const FormState = (props) => {
         answer,
         config
       );
-      console.log('post res', res);
+      console.log('results', res.data);
       dispatch({
         type: 'addAnswer',
         payload: res.data,
       });
     } catch (error) {
       console.error(error);
-
-      dispatch({
-        type: 'surveyError',
-        payload: error.response.msg,
-      });
     }
   };
 
