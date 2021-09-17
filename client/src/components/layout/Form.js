@@ -2,9 +2,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import FormContext from '../../context/form/formContext';
 import Rating from '@mui/material/Rating';
 import { fontSize } from '@mui/system';
+import { useHistory } from 'react-router';
 
 const Form = () => {
   const formContext = useContext(FormContext);
+  const history = useHistory();
 
   const { getSurvey, APIRes, addAnswer, POSTRes } = formContext;
 
@@ -12,6 +14,7 @@ const Form = () => {
     getSurvey();
 
     if (POSTRes && !POSTRes.errors) {
+      history.push('/success');
     }
   }, [POSTRes]);
 
